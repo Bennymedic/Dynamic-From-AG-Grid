@@ -1,0 +1,28 @@
+<form [formGroup]="dynamicForm" (ngSubmit)="submit()">
+    <div *ngFor="let value of data">
+      <!-- Input for text or checkbox -->
+      <div *ngIf="value.type === 'text' || value.type === 'checkbox'">
+        <label>{{ value.label }}</label>
+        <input [type]="value.type" [formControlName]="value.label" [placeholder]="value.label" />
+      </div>
+  
+      <!-- Radio buttons -->
+      <div *ngIf="value.type === 'radio'">
+        <label>{{ value.label }}</label>
+        <div *ngFor="let option of value.options">
+          <input type="radio" [formControlName]="value.label" [value]="option" /> {{ option }}
+        </div>
+      </div>
+  
+      <!-- Select dropdown -->
+      <div *ngIf="value.type === 'select'">
+        <label>{{ value.label }}</label>
+        <select [formControlName]="value.label">
+          <option *ngFor="let option of value.options" [value]="option">{{ option }}</option>
+        </select>
+      </div>
+    </div>
+  
+    <button type="submit" [disabled]="dynamicForm.invalid">Submit</button>
+  </form>
+  
